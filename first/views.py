@@ -7,6 +7,9 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+#POST, GET and other Methods will require authentication to work
+from rest_framework.permissions import IsAuthenticated
+
 
 from .selializer import FooSerializer
 from .models import FooModel
@@ -16,6 +19,8 @@ from .models import FooModel
 
 
 class FooView(APIView):
+	permission_classes = (IsAuthenticated,)
+
 	def get(self, request, *args, **kwargs):
 		query_set = FooModel.objects.all()
 		#use many=True if retrieving many sets
